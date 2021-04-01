@@ -1,8 +1,8 @@
 package guru.springframework.spring5webapp.model;
 
 import lombok.Data;
-import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -23,7 +23,7 @@ public class Publisher {
 
     @OneToMany
     @JoinColumn(name = "publisher_id")
-    @EqualsAndHashCode.Exclude
+    @ToString.Exclude
     private Set<Book> books = new HashSet<>();
 
     public Publisher(String name, String address, String state, String zip) {
