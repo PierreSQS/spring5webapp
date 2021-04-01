@@ -34,6 +34,8 @@ public class BootStrapData implements CommandLineRunner {
         springBootFundamentals.getAuthors().add(kenKousen);
 
         authorRepo.save(kenKousen);
+        log.info("saved Author {}", kenKousen);
+
         bookRepo.save(javaRecipes);
         bookRepo.save(springBootFundamentals);
         log.info("saved books {}", bookRepo.count());
