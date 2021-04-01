@@ -1,6 +1,7 @@
 package guru.springframework.spring5webapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
@@ -18,6 +19,7 @@ public class Author {
     private final String lastName;
 
     @ManyToMany(mappedBy = "authors")
+    @EqualsAndHashCode.Exclude
     Set<Book> books = new HashSet<>();
 
 
