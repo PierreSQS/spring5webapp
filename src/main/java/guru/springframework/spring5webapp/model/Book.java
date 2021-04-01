@@ -1,6 +1,7 @@
 package guru.springframework.spring5webapp.model;
 
 import lombok.Data;
+import lombok.EqualsAndHashCode;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
@@ -20,6 +21,10 @@ public class Book {
     @ManyToMany
     @JoinTable(name = "author_book", joinColumns = @JoinColumn(name = "author_id"), inverseJoinColumns = @JoinColumn(name = "book_id"))
     private Set<Author> authors = new HashSet<>();
+
+    @ManyToOne
+    @EqualsAndHashCode.Exclude
+    private Publisher publisher;
 
     public Book(String title, String isbn) {
         this.title = title;
