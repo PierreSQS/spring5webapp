@@ -4,6 +4,7 @@ import lombok.Data;
 import lombok.RequiredArgsConstructor;
 
 import javax.persistence.*;
+import java.util.HashSet;
 import java.util.Set;
 
 @Data
@@ -13,9 +14,11 @@ public class Author {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
-    String firstName;
-    String lastName;
+    private final String firstName;
+    private final String lastName;
 
     @ManyToMany(mappedBy = "authors")
-    Set<Book> books;
+    Set<Book> books = new HashSet<>();
+
+
 }
