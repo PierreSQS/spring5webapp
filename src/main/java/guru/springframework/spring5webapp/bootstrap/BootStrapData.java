@@ -34,11 +34,11 @@ public class BootStrapData implements CommandLineRunner {
         springBootFundamentals.getAuthors().add(kenKousen);
 
         authorRepo.save(kenKousen);
-        log.info("saved Author {}", kenKousen);
+        log.info("*** saved Author {} *** ", kenKousen);
 
         bookRepo.save(javaRecipes);
         bookRepo.save(springBootFundamentals);
-        log.info("saved books {}", bookRepo.count());
+        log.info("*** saved books {} ***", bookRepo.count());
 
         Publisher publisher = new Publisher("Edition Sanaga", "Rue du Wouri", "Centre","45454");
         publisher.getBooks().add(javaRecipes);
@@ -47,7 +47,7 @@ public class BootStrapData implements CommandLineRunner {
         javaRecipes.setPublisher(publisher);
         springBootFundamentals.setPublisher(publisher);
         publisherRepo.save(publisher);
-        log.info("saved Publisher {}",publisher);
+        log.info("*** saved Publisher {} ***",publisher);
 
     }
 }
