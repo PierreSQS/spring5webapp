@@ -14,7 +14,7 @@
     <tr th:each="book:${books}">
         <td th:text="${book.id}">123</td>
         <td th:text="${book.title}">Dummy Title</td>
-        <td>Dummy Publisher</td>
+        <td th:text="${book.publisher}">Dummy Publisher</td>
     </tr>
 </table>
 </body>
