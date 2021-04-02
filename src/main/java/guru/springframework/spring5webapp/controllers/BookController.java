@@ -14,10 +14,10 @@ public class BookController {
 
     private final BookRepository bookRepo;
 
-    @GetMapping("/books")
+    @GetMapping("/templates/books")
     public String getBooks(Model model) {
         log.info("######## Entering BookController #######");
-        model.addAttribute("books", bookRepo.findAll());
-        return "books/books_list";
+        model.addAttribute("templates/books", bookRepo.findAll());
+        return "templates/books/books_list";
     }
 }
