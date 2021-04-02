@@ -17,7 +17,7 @@ public class BookController {
     @GetMapping("/books")
     public String getBooks(Model model) {
         log.info("######## Entering BookController #######");
-        model.addAttribute("templates/books", bookRepo.findAll());
+        model.addAttribute("books", bookRepo.findAll());
         return "books/books_list";
     }
 }
