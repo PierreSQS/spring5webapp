@@ -3,7 +3,6 @@ package guru.springframework.spring5webapp.bootstrap;
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
-import guru.springframework.spring5webapp.repositories.BookRepository;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
@@ -13,12 +12,9 @@ import java.util.Collections;
 @Component
 public class BootStrapData implements CommandLineRunner {
     private final AuthorRepository authorRepo;
-// the Book-Repository is not need since CASCADE.ALL (s. Entities-Mappings)
-//    private final BookRepository bookRepo;
 
-    public BootStrapData(AuthorRepository authorRepo, BookRepository bookRepo) {
+    public BootStrapData(AuthorRepository authorRepo) {
         this.authorRepo = authorRepo;
-//        this.bookRepo = bookRepo;
     }
 
 
