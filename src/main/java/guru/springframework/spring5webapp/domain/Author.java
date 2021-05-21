@@ -11,14 +11,18 @@ import java.util.Objects;
 @RequiredArgsConstructor
 @Data
 @Entity
+@Table(name = "authors")
 public class Author {
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String firstName;
     private String lastName;
 
     @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "author_book",
+            joinColumns = @JoinColumn(name = "author_id"),
+            inverseJoinColumns = @JoinColumn(name = "book_id"))
     private List<Book> books = new ArrayList<>();
 
     @Override
