@@ -2,19 +2,29 @@ package guru.springframework.spring5webapp.bootstrap;
 
 import guru.springframework.spring5webapp.domain.Author;
 import guru.springframework.spring5webapp.domain.Book;
+import guru.springframework.spring5webapp.domain.Publisher;
 import guru.springframework.spring5webapp.repositories.AuthorRepository;
+import guru.springframework.spring5webapp.repositories.BookRepository;
+import guru.springframework.spring5webapp.repositories.PublisherRepository;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
 
 import java.util.Arrays;
 import java.util.Collections;
 
+@Slf4j
 @Component
 public class BootStrapData implements CommandLineRunner {
     private final AuthorRepository authorRepo;
+    private final PublisherRepository publisherRepo;
+    // Not in USE for saving, Since CASCADE.ALL on parent class Author
+    private final BookRepository bookRepo;
 
-    public BootStrapData(AuthorRepository authorRepo) {
+    public BootStrapData(AuthorRepository authorRepo, PublisherRepository publisherRepo, BookRepository bookRepo) {
         this.authorRepo = authorRepo;
+        this.publisherRepo = publisherRepo;
+        this.bookRepo = bookRepo;
     }
 
 
@@ -53,6 +63,19 @@ public class BootStrapData implements CommandLineRunner {
 
         authorRepo.save(craigWalls);
         authorRepo.save(kenKousen);
+        log.info("#### Saved Authors {} ###",authorRepo.count());
+        log.info("#### Saved Books over CASCADE.ALL in Author-Class {} ###",bookRepo.count());
+
+        // Publisher
+        Publisher publisher = new Publisher();
+        publisher.setName("Oreilly");
+        publisher.setCity("Boston");
+        publisher.setAdressLine1("2 Avenue de Lafayette");
+        publisher.setState("MA");
+        publisher.setZipCode("02111");
+
+        publisherRepo.save(publisher);
+        log.info("####### Saved Publisher: {}",publisher);
 
     }
 }
