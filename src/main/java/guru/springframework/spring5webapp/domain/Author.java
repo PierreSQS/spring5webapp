@@ -2,14 +2,15 @@ package guru.springframework.spring5webapp.domain;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
 @Data
+@RequiredArgsConstructor
 @Entity
 @Table(name = "authors")
 public class Author {
@@ -23,19 +24,19 @@ public class Author {
     @JoinTable(name = "author_book",
             joinColumns = @JoinColumn(name = "author_id"),
             inverseJoinColumns = @JoinColumn(name = "book_id"))
+    @ToString.Exclude
     private List<Book> books = new ArrayList<>();
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Author author = (Author) o;
-        return id.equals(author.id);
+        var author = (Author) o;
+        return Objects.equals(id, author.id);
     }
 
     @Override
     public int hashCode() {
         return Objects.hash(id);
     }
-
 }
