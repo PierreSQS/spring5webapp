@@ -2,9 +2,10 @@ package guru.springframework.spring5webapp.domain;
 
 import lombok.Data;
 import lombok.RequiredArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.*;
-import java.util.Objects;
+import java.util.*;
 
 @Entity
 @RequiredArgsConstructor
@@ -21,12 +22,17 @@ public class Publisher {
     private String city;
     private String zipCode;
 
+    @OneToMany
+    @JoinColumn(name = "publisher_id")
+    @ToString.Exclude
+    private List<Book> bookList = new ArrayList<>();
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
-        Publisher publisher = (Publisher) o;
-        return id.equals(publisher.id);
+        var publisher = (Publisher) o;
+        return Objects.equals(id, publisher.id);
     }
 
     @Override

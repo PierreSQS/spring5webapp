@@ -18,7 +18,8 @@ import java.util.Collections;
 public class BootStrapData implements CommandLineRunner {
     private final AuthorRepository authorRepo;
     private final PublisherRepository publisherRepo;
-    // Not in USE for saving, Since CASCADE.ALL on parent class Author
+    // Not in USE for saving, Since CASCADE.PERSIST in parent class Author
+    // Not to recommend!!!
     private final BookRepository bookRepo;
 
     public BootStrapData(AuthorRepository authorRepo, PublisherRepository publisherRepo, BookRepository bookRepo) {
@@ -30,27 +31,46 @@ public class BootStrapData implements CommandLineRunner {
 
     @Override
     public void run(String... args) {
-        Author craigWalls = new Author();
+        // Publisher
+        var publisher = new Publisher();
+        publisher.setName("Oreilly");
+        publisher.setCity("Boston");
+        publisher.setAdressLine1("2 Avenue de Lafayette");
+        publisher.setState("MA");
+        publisher.setZipCode("02111");
+        publisher = publisherRepo.save(publisher);
+
+        var craigWalls = new Author();
         craigWalls.setFirstName("Craig");
         craigWalls.setLastName("Walls");
 
-        Author kenKousen = new Author();
+        var kenKousen = new Author();
         kenKousen.setFirstName("Ken");
         kenKousen.setLastName("Kousen");
 
-        Book book1 = new Book();
+        var book1 = new Book();
         book1.setIsbn("111111");
         book1.setTitle("Spring in Action 5th Edition");
 
-        Book book2 = new Book();
+        // set Publisher book1
+        book1.setPublisher(publisher);
+        // set book1 for publisher
+        publisher.getBookList().add(book1);
+
+        var book2 = new Book();
         book2.setIsbn("222222");
         book2.setTitle("Spring in Action 4th Edition");
 
-        Book book3 = new Book();
+        // set Publisher book2
+        book2.setPublisher(publisher);
+        // set book2 for publisher
+        publisher.getBookList().add(book2);
+
+        var book3 = new Book();
         book3.setIsbn("333333");
         book3.setTitle("Groovy Fundamentals");
 
-        Book book4 = new Book();
+        var book4 = new Book();
         book4.setIsbn("444444");
         book4.setTitle("Java Recipes");
 
@@ -63,19 +83,14 @@ public class BootStrapData implements CommandLineRunner {
 
         authorRepo.save(craigWalls);
         authorRepo.save(kenKousen);
+        log.info("####### Saved Publisher: {}",publisherRepo.save(publisher));
+        log.info("####### Books to publisher {}", publisher);
+        log.info("Publisher Books {}",publisher.getBookList().size());
+        publisher.getBookList().forEach(book -> log.info("--- {} ---",book));
+
+        log.info("### Publisher books in the DB: {} ###",bookRepo.findByPublisherId(1L).size());
+
         log.info("#### Saved Authors {} ###",authorRepo.count());
-        log.info("#### Saved Books over CASCADE.ALL in Author-Class {} ###",bookRepo.count());
-
-        // Publisher
-        Publisher publisher = new Publisher();
-        publisher.setName("Oreilly");
-        publisher.setCity("Boston");
-        publisher.setAdressLine1("2 Avenue de Lafayette");
-        publisher.setState("MA");
-        publisher.setZipCode("02111");
-
-        publisherRepo.save(publisher);
-        log.info("####### Saved Publisher: {}",publisher);
-
+        log.info("#### Saved Books over CASCADE.PERSIST in Author-Class: {} ###",bookRepo.count());
     }
 }
