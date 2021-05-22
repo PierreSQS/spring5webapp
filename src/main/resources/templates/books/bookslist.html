@@ -16,6 +16,7 @@
         <td th:text="${book.id}">1</td>
         <td th:text="${book.title}">Spring in Action</td>
         <td th:if="${book.publisher != null}" th:text="*{book.publisher.name}">>Oreilly</td>
+        <td th:if="${book.publisher == null}" th:text="'Not Set'">>Oreilly</td>
     </tr>
 </table>
 
