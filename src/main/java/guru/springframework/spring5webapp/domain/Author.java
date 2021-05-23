@@ -1,8 +1,6 @@
 package guru.springframework.spring5webapp.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -10,7 +8,7 @@ import java.util.List;
 import java.util.Objects;
 
 @Data
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Entity
 @Table(name = "authors")
 public class Author {
@@ -26,6 +24,12 @@ public class Author {
             inverseJoinColumns = @JoinColumn(name = "book_id"))
     @ToString.Exclude
     private List<Book> books = new ArrayList<>();
+
+    @Builder
+    public Author(String firstName, String lastName) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+    }
 
     @Override
     public boolean equals(Object o) {

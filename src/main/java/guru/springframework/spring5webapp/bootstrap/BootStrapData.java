@@ -32,47 +32,51 @@ public class BootStrapData implements CommandLineRunner {
     @Override
     public void run(String... args) {
         // Publisher
-        var publisher = new Publisher();
-        publisher.setName("Oreilly");
-        publisher.setCity("Boston");
-        publisher.setAdressLine1("2 Avenue de Lafayette");
-        publisher.setState("MA");
-        publisher.setZipCode("02111");
+        var publisher = Publisher.builder()
+                .name("Oreilly").city("Boston")
+                .adressLine1("2 Avenue de Lafayette")
+                .state("MA").zipCode("02111")
+                .build();
         publisher = publisherRepo.save(publisher);
 
-        var craigWalls = new Author();
-        craigWalls.setFirstName("Craig");
-        craigWalls.setLastName("Walls");
+        var craigWalls = Author.builder()
+                .firstName("Craig")
+                .lastName("Walls")
+                .build();
 
-        var kenKousen = new Author();
-        kenKousen.setFirstName("Ken");
-        kenKousen.setLastName("Kousen");
+        var kenKousen =Author.builder()
+                .firstName("Ken")
+                .lastName("Kousen")
+                .build();
 
-        var book1 = new Book();
-        book1.setIsbn("111111");
-        book1.setTitle("Spring in Action 5th Edition");
+        var book1 = Book.builder()
+                .isbn("111111")
+                .title("Spring in Action 5th Edition")
+                .build();
 
         // set Publisher book1
         book1.setPublisher(publisher);
         // set book1 for publisher
         publisher.getBookList().add(book1);
 
-        var book2 = new Book();
-        book2.setIsbn("222222");
-        book2.setTitle("Spring in Action 4th Edition");
+        var book2 =  Book.builder()
+                .isbn("222222")
+                .title("Spring in Action 4th Edition")
+                .build();
 
         // set Publisher book2
         book2.setPublisher(publisher);
         // set book2 for publisher
         publisher.getBookList().add(book2);
 
-        var book3 = new Book();
-        book3.setIsbn("333333");
-        book3.setTitle("Groovy Fundamentals");
+        var book3 =  Book.builder()
+                .isbn("333333")
+                .title("Groovy Fundamentals")
+                .build();
 
-        var book4 = new Book();
-        book4.setIsbn("444444");
-        book4.setTitle("Java Recipes");
+        var book4 =  Book.builder()
+                .isbn("444444").title("Java Recipes")
+                .build();
 
         craigWalls.setBooks(Arrays.asList(book1,book2));
         kenKousen.setBooks(Arrays.asList(book3,book4));

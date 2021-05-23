@@ -1,14 +1,12 @@
 package guru.springframework.spring5webapp.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.*;
 
 @Entity
-@RequiredArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @Data
 @Table(name = "publishers")
 public class Publisher {
@@ -26,6 +24,15 @@ public class Publisher {
     @JoinColumn(name = "publisher_id")
     @ToString.Exclude
     private List<Book> bookList = new ArrayList<>();
+
+    @Builder
+    public Publisher(String name, String adressLine1, String state, String city, String zipCode) {
+        this.name = name;
+        this.adressLine1 = adressLine1;
+        this.state = state;
+        this.city = city;
+        this.zipCode = zipCode;
+    }
 
     @Override
     public boolean equals(Object o) {

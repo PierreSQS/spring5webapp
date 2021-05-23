@@ -1,16 +1,14 @@
 package guru.springframework.spring5webapp.domain;
 
-import lombok.Data;
-import lombok.RequiredArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-@RequiredArgsConstructor
-@Data()
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Data
 @Entity
 @Table(name = "books")
 public class Book {
@@ -28,6 +26,11 @@ public class Book {
     @ToString.Exclude
     Publisher publisher;
 
+    @Builder
+    public Book(String title, String isbn) {
+        this.title = title;
+        this.isbn = isbn;
+    }
 
     @Override
     public boolean equals(Object o) {
